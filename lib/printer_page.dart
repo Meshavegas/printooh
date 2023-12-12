@@ -2,6 +2,7 @@ import 'package:bluetooth_print/bluetooth_print.dart';
 import 'package:bluetooth_print/bluetooth_print_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class BleutoohPage extends StatefulWidget {
   final List<Map<String, dynamic>> data;
@@ -65,7 +66,24 @@ class _BleutoohPage extends State<BleutoohPage> {
 
   Future<void> _startPrinting(BluetoothDevice device) async {
     if (device != null && device.address != null) {
-      await bluetoothPrint.connect(device);
+      await bluetoothPrint
+          .connect(device)
+          .then((value) => Fluttertoast.showToast(
+              msg: " ${value.toString()}",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0))
+          .catchError((value) => Fluttertoast.showToast(
+              msg: value.toString(),
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0));
 
       Map<String, dynamic> config = Map();
       List<LineText> list = [];
@@ -94,6 +112,24 @@ class _BleutoohPage extends State<BleutoohPage> {
             align: LineText.ALIGN_LEFT,
             linefeed: 1));
       }
+      await bluetoothPrint
+          .printReceipt(config, list)
+          .then((value) => Fluttertoast.showToast(
+              msg: " ${value.toString()}",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0))
+          .catchError((value) => Fluttertoast.showToast(
+              msg: value.toString(),
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0));
     }
   }
 }
