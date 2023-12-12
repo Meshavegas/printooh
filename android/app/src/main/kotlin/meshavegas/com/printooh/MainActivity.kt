@@ -1,0 +1,6 @@
+package meshavegas.com.printooh
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
